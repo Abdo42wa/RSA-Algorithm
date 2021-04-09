@@ -84,14 +84,18 @@ namespace RSA_Algorithm
                 // E should not share the same factor with phi
                 for (BigInteger i = 2; i < phi; i++) // We choose the largest x point
                 {
-                 
+                    if (HelperMethods.checkPrime(i) && HelperMethods.checkCoPrime(i, phi) && i != p && i != q && i != phi)
+                    {
+                        e = i;
+                        break;
+                    }
                 }
                 Console.WriteLine(n + " <- N");
                 Console.WriteLine(phi + " <- Phi");
                 Console.WriteLine(e + " <- E");
                 //d = (2 * phi + 1) / e;
-               
-                //d = result;
+                HelperMethods.TryModInverse(e, phi, out BigInteger result);
+                d = result;
                 Console.WriteLine(d + " <- D");
                 //Encryption();
             }
@@ -118,8 +122,8 @@ namespace RSA_Algorithm
                 Console.WriteLine(q + "<- Q decryption");
                 phi = (p - 1) * (q - 1);
                 Console.WriteLine(phi + "<- Phi decryption");
-                
-                //d = result;
+                HelperMethods.TryModInverse(e, phi, out BigInteger result);
+                d = result;
                 Console.WriteLine(d + "<- d decryption");
 
             }
