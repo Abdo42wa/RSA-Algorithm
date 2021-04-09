@@ -45,7 +45,88 @@ namespace RSA_Algorithm
             }
         }
 
+        public string Decryption()
+        {
+            try
+            {
+                Console.WriteLine("ENCRYPTED TEXT {0}", Convert.ToString(encryptedText));
+                Console.WriteLine("N " + n);
+                char[] c = new char[encryptedText.Length];
 
+                for (int i = 0; i < encryptedText.Length; i++)
+                {
+                    c[i] = (char)(BigInteger.Pow(encryptedText[i], (int)d) % n);
+                }
+                return new string(c);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Decryption ex {0}", ex);
+                return null;
+            }
+        }
 
+        public void rsaEncryption(string text, BigInteger p, BigInteger q)
+        {
+            try
+            {
+                asciiList = new List<int>();
+                foreach (char c in text)
+                {
+                    asciiList.Add(Convert.ToInt32(c));
+                }
+                Console.WriteLine(p + " <- This is P");
+                Console.WriteLine(q + " <- This is Q");
+
+                n = p * q;
+                phi = (p - 1) * (q - 1);
+                Console.WriteLine(e + " <- E");
+                // E should not share the same factor with phi
+                for (BigInteger i = 2; i < phi; i++) // We choose the largest x point
+                {
+                 
+                }
+                Console.WriteLine(n + " <- N");
+                Console.WriteLine(phi + " <- Phi");
+                Console.WriteLine(e + " <- E");
+                //d = (2 * phi + 1) / e;
+               
+                //d = result;
+                Console.WriteLine(d + " <- D");
+                //Encryption();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Decryption ex {0}", ex);
+            }
+        }
+
+        public void rsaDecryption(BigInteger[] encrypted, BigInteger n, BigInteger e)
+        {
+            this.encryptedText = encrypted; 
+            this.n = n;
+            this.e = e;
+            p = 2;
+            try
+            {
+                while (n % p > 0)
+                {
+                    p++;
+                }
+                q = n / p;
+                Console.WriteLine(p + "<- P decryption");
+                Console.WriteLine(q + "<- Q decryption");
+                phi = (p - 1) * (q - 1);
+                Console.WriteLine(phi + "<- Phi decryption");
+                
+                //d = result;
+                Console.WriteLine(d + "<- d decryption");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Decryption ex {0}", ex);
+            }
+        }
     }
 }
