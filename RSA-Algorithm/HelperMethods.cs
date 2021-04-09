@@ -70,7 +70,8 @@ namespace RSA_Algorithm
             }
             result = v % modulo;
             if (result < 0) result += modulo;
-           
+            if ((long)number * result % modulo == 1L) return true;
+            result = default;
             return false;
         }
 
